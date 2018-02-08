@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<style media="screen">
+
+  .carousel-inner img{
+    	width:100%;
+      height: 300px;
+    }
+
+</style>
+  <body>
+    <nav class="navbar bg-dark navbar-dark fixed-top " >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand " href="#">PC's Aguilar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#collapsibleNavbar"><a href="#" class="navbar-toggler-icon"></a>
+          </button>
+
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+          <form class="mt-0"action="index.html" method="post">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Buscar...">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <ul class="nav navbar-pills ">
+            <li class="nav-item"><a class="nav-link" href="#">
+              <span class="glyphicon glyphicon-search"></span> Entra o registrate</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"> Carrito</a></li>
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicadores del carousel -->
+        <ul class="carousel-indicators">
+          <li data-target="#demo" data-slide-to="0" class="active"></li>
+          <li data-target="#demo" data-slide-to="1"></li>
+          <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+
+        <!-- Las imagenes que quiero que salgan -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="http://farm6.static.flickr.com/5178/5428759578_d6fb2288a4.jpg">
+          </div>
+          <div class="carousel-item">
+            <img src="http://farm6.static.flickr.com/5178/5428759578_d6fb2288a4.jpg">
+          </div>
+          <div class="carousel-item">
+            <img src="http://farm6.static.flickr.com/5178/5428759578_d6fb2288a4.jpg">
+          </div>
+        </div>
+
+        <!-- Controles de izquierda y derecha -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+
+      <div class="row center-block">
+        <?php
+          foreach ($datos as $dato) {
+        ?>
+
+        <div class="card col-3" style= "width:400px; margin: 10px;" >
+          <img class="card-img-top" src="https://thumb.pccomponentes.com/w-530-530/articles/13/134039/1340390.jpg" alt="Card image" style="width:100%">
+        <div class="card-body">
+            <h4 class="card-title"><?php echo $dato['NAME'] ?> </h4>
+            <p class="card-text"><?php echo $dato['SHORTDESCRIPTION'] ?> </p>
+            <p class="card-text"><?php echo $dato['PRICE'] ?> €</p>
+            <a href="#" class="btn bg-dark">Comprar</a>
+          </div>
+        </div>
+
+
+        <?php
+        }
+          ?>
+      </div>
+    </div>
+  </body>
+</html>

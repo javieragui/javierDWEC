@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title><?php echo $titulo ?></title>
+    </head>
+    <body>
+      <h1><?php echo $titulo ?></h1>
+        <?php
+            foreach ($ps as $p) {
+                echo "{$p['nombre']} tiene {$p['edad']} años." .
+                     "<a href=\"index.php?controller=personas&action=delete&id={$p['id']}\">Borrar</a><br/>";
+            }
+        ?>
+        <p><a href="index.php?controller=personas&action=add">Alta de Personas</a></p>
+        <p><a href="index.php?controller=coches&action=listado">Ver Coches <a/></p>
+    </body>
+</html>
