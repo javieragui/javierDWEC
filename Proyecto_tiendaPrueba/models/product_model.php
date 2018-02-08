@@ -1,8 +1,9 @@
-<?php
+ <?php
 
   class product_model{
     private $db;
     private $product;
+    private $promotion;
 
     private $id;
     private $name;
@@ -85,15 +86,15 @@
   }
 
   public function get_product(){
-    $consulta=$this->db->query("select * from PRODUCT;");
+    $consulta=$this->db->query("select * from PRODUCT where SPONSORED = 'Y';");
     while($filas=$consulta->fetch_assoc()){
       $this->productos[]=$filas;
     }
     return $this->productos;
   }
 
-  public function getPromotion(){
-    $consulta=$this->db->query("select * from PROMOTION join PRODUCT where PROMOTION.PRODUCT = PRODUCT.ID;");
+  public function get_Promotion(){
+    $consulta=$this->db->query("select * from PRODUCT join PROMOTION where PRODUCT.ID = PROMOTION.PRODUCT;");
     while($filas=$consulta->fetch_assoc()){
       $this->productos[]=$filas;
     }

@@ -19,11 +19,6 @@ session_start();
            $buscador= $_POST['busqueda'];
            $controller->buscador($buscador);
          }
-         //Para ver el carrousel
-      if ($_GET['action'] == "viewPromotion") {
-            $controller = new product_controller();
-            $controller->viewPromotion();
-          }
       if($_GET['action'] == "ordCategoria"){
           $controller = new product_controller();
           $controller->ordCategoria();
