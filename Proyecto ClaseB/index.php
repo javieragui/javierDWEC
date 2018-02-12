@@ -24,20 +24,31 @@ session_start();
           $controller->ordCategoria();
 
         }
+        if($_GET['action']== "filtroMarca"){
+          $controller = new product_controller();
+          $brandFilt= $_POST['butBrand'];
+          $controller->filterBrand($brandFilt);
+        }
+
     }
 
     if ($_GET['controller'] == "usuarios") {
+      $controllerP = new product_controller();
 
       if ($_GET['action'] == "login") {
         $controller = new usuarios_controller();
         $username= $_POST['username'];
         $password= $_POST['password'];
         $controller->login($username,$password);
+        $controllerP->view();
+
 
       }
       if ($_GET['action'] == "logout") {
         $controller = new usuarios_controller();
         $controller->logout();
+        $controllerP->view();
+
       }
       if ($_GET['action'] == "mostrar_login") {
         $controller = new usuarios_controller();
@@ -52,6 +63,7 @@ session_start();
         $controller = new usuarios_controller();
         $controller->mostrar_register();
       }
+
     }
   }else{
     $controller = new product_controller();

@@ -14,18 +14,12 @@ class usuarios_controller {
 
     if($encontrado){
       $_SESSION['username']=$username;
-        header('Location: index.php?controller=product&action=view');
+    }
 
-      } else {
-        header('Location: index.php?controller=usuarios&action=mostrar_login');
-      }
     }
 
     function logout(){
-        session_start();
         session_unset($_SESSION['username']);
-        header('Location: index.php?controller=product&action=view');
-        exit();
       }
 
     function mostrar_login(){

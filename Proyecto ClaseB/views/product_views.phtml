@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<script type="text/javascript">
+  function registerUser(){
+    var pass = document.getElementById('passReg').value;
+    var pass2 = document.getElementById('passReg2').value;
+
+    if(pass==pass2){
+      document.getElementById("registroUsuario").disabled = true;
+    }
+  }
+</script>
+<style media="screen">
+
+  .carousel-inner img{
+    width:100%;
+    height: 300px;
+  }
+  #navbardrop{
+    color: white;
+  }
+  .card{
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 5px;
+  }
+  .filtro{
+    margin-left: 5%;
+  }
+
+</style>
+  <body>
+    <nav class="navbar bg-dark navbar-dark">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand " href="#">PC's Aguilar</a>
+        </div>
+
+        <!--Buscador  -->
+        <form action="index.php?controller=product&action=buscador" method="post">
+          <div class="input-group">
+            <input type="text" name="busqueda" class="form-control" placeholder="Buscar..." autofocus>
+            <button class="btn btn-primary" type="submit" ></button>
+          </div>
+
+        </form>
+
+        <?php if(isset($_SESSION['username'])){ ?>
+
+          <label style="color:white"><?php echo "Bienvenido, ". $_SESSION['username'];?></label>
+          <a href="index.php?controller=usuarios&action=logout" style="color=white" >Cerrar Sesion</a>
+
+        <?php }else{ ?>
+          <button data-toggle="modal" data-target="#myModal" type="submit" class="btn btn-primary">Entra o registrate</button>
+        <?php } ?>
+
+        <button type="submit" class="btn btn-primary">Carrito</button>
+
+      </div>
+    </nav>
+
+    <nav class=" navbar bg-dark navbar-dark">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand " href="#">Categorias</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#collapsibleNavbar"><a href="#" class="navbar-toggler-icon"></a>
+          </button>
+          <div class="collapse navbar-collapse navbar-expand" id="collapsibleNavbar">
+
+            <ul class="navbar-nav">
+              <?php foreach($verCategorias as $verCategoria){ ?>
+
+                <li class="nav-item dropdown">
+
+                  <a class="nav-link dropdown-toggle" id="navbardrop"
+                  data-toggle="dropdown">
+                  <?php echo $verCategoria['NAME'] ?></a>
+
+                  <div class="dropdown-menu ">
+                  <?php  foreach ($verSubcategorias as $verSubcategoria) {
+                       if($verCategoria['ID']==$verSubcategoria['PARENTCATEGORY'] ){?>
+
+                      <a id="<?php echo $verSubcategoria['ID'] ?>" href="index.php?controller=product&action=ordCategoria&ID=<?php echo $verSubcategoria['ID'] ?>" class="dropdown-item" ><?php echo $verSubcategoria['NAME'] ?></a>
+
+                  <?php } }?>
+                  </div>
+
+                </li>
+              <?php } ?>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+
+
+    <div class="container">
+<?php if(!isset($_GET['ID'])){
+   if(!isset($_POST['busqueda'])){ ?>
+      <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicadores del carousel -->
+        <ul class="carousel-indicators">
+          <?php
+          $contador = 0;
+
+          foreach ($ofertas as $oferta) {?>
+          <li data-target="#demo" data-slide-to=<?php $contador;?> class=<?php if($contador==0){ ?> "active" <?php } ?>></li>
+
+        <?php
+        $contador++;
+          }
+        ?>
+        </ul>
+
+        <!-- Las imagenes que quiero que salgan -->
+
+        <div class="carousel-inner">
+          <?php
+          $contador2=0;
+            foreach ($ofertas as $oferta) {
+          ?>
+          <div class="carousel-item <?php if($contador2==0){ ?> active" <?php } ?>>
+
+            <img src="http://farm6.static.flickr.com/5178/5428759578_d6fb2288a4.jpg">
+            <h4 class="card-title"><?php echo $oferta['NAME'] ?> </h4>
+            <p class="card-text"><?php echo $oferta['SHORTDESCRIPTION'] ?> </p>
+            <p class="card-text"><?php echo $oferta['PRICE'] ?> €</p>
+
+          </div>
+          <?php
+          $contador2++;
+            }
+          ?>
+        </div>
+
+        <!-- Controles de izquierda y derecha -->
+        <a class="carousel-control-prev" href="#demo" data-slide="p
+        .rev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    <?php } } ?>
+    </div>
+
+  <div class="row">
+      <div class="col-3 filtro">
+        <h1>Filtro</h1>
+        <h2>Marcas</h2>
+        <?php foreach ($viewBrands as $viewBrand){ ?>
+
+          <br><input id="<?php echo $viewBrand['ID'] ?>" type="checkbox"><label><?php echo $viewBrand['NAME'] ?></label>
+
+        <?php } ?>
+        <form action="index.php?controller=product&action=filtroMarca" method="post">
+          <br><input class="btn btn-primary" type="submit" name="butBrand" value="butBrand">
+        </form>
+
+      </div>
+      <div class="col-8 container">
+
+          <?php
+            foreach ($datos as $dato) {
+          ?>
+          <div class="card col-3"  >
+            <img class="card-img-top" src="http://farm6.static.flickr.com/5178/5428759578_d6fb2288a4.jpg" alt="Card image" style="width:100%">
+          <div class="card-body">
+              <p class="card-text"><?php echo $dato['SHORTDESCRIPTION']?> </p>
+              <h4 class="card-title"><?php echo $dato['NAME']?> </h4>
+              <p class="card-text"><?php echo $dato['PRICE']?> €</p>
+              <button type="button" name="button" class="btn btn-primary">Comprar</button>
+            </div>
+          </div>
+          <?php
+            }
+          ?>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#entrar">Entrar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#registrarse">Registrarse</a>
+              </li>
+            </ul>
+
+            <div class="modal-header tab-content">
+              <div id="entrar" class="container tab-pane active"><br>
+
+                <h4 class="modal-title">Entrar</h4>
+
+                <div class="modal-body">
+                  <form action="index.php?controller=usuarios&action=login" method="post">
+                    <div class="form-group">
+                      <label for="usuario">Usuario:</label>
+                      <input type="text" class="form-control" name="username" placeholder="Usuario..." required>
+                    </div>
+                    <div class="form-group">
+                      <label>Contraseña:</label>
+                      <input type="password" class="form-control" name="password" placeholder="Contraseña..." required>
+                    </div>
+                      <button  type="submit" name="login" class="btn btn-primary">Entrar</button>
+                    </form>
+                  </div>
+                </div>
+
+              <div id="registrarse" class="container tab-pane fade">
+                <form method="post" action="index.php?controller=usuarios&action=registroUsuario">
+                  <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" maxlength="6" class="form-control" name="userReg" placeholder="Usuario..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Nombre completo:</label>
+                    <input type="text" class="form-control" name="nameReg" placeholder="Nombre completo..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Email:</label>
+                    <input type="text" class="form-control" name="emailReg" placeholder="Email..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Dirección:</label>
+                    <input type="text" class="form-control" name="dirReg" placeholder="Dirección..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Codigo Postal:</label>
+                    <input type="text" class="form-control" name="postalReg" placeholder="Codigo Postal..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Contraseña:</label>
+                    <input onkeypress="registerUser()" onkeyup="registerUser()" type="text" id="passReg" class="form-control" name="passReg" placeholder="Contraseña..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Repetir contraseña:</label>
+                    <input onkeypress="registerUser()" onkeyup="registerUser()" type="text" id="passReg2" class="form-control" name="passReg2" placeholder="Repetir contraseña..." required>
+                  </div>
+                  <button  type="submit" id="registroUsuario" name="registroUsuario"  class="btn btn-primary" disabled>Registrarse</button>
+                </form>
+                <script type="text/javascript">
+
+                function registerUser(){
+                  var pass = document.getElementById('passReg').value;
+                  var pass2 = document.getElementById('passReg2').value;
+                    if(pass==pass2){
+                      document.getElementById("registroUsuario").disabled = false;
+                    }if(pass!=pass2){
+                      document.getElementById("registroUsuario").disabled = true;
+                    }
+                  }
+                </script>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
