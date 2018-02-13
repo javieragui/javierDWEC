@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+
+  <body>
+    <form method="post" action="index.php?controller=usuarios&action=registroUsuario">
+      <div class="form-group">
+        <label for="userReg">Usuario:</label>
+        <input type="text" class="form-control" name="userReg" placeholder="Usuario..." required>
+      </div>
+      <div class="form-group">
+        <label for="nameReg">Nombre completo:</label>
+        <input type="text" maxlength="50" class="form-control" name="nameReg" placeholder="Nombre completo..." required>
+      </div>
+      <div class="form-group">
+        <label for="emailReg">Email:</label>
+        <input type="text" maxlength="50" class="form-control" name="emailReg" placeholder="Email..." required>
+      </div>
+      <div class="form-group">
+        <label for="dirReg">Dirección:</label>
+        <input type="text" maxlength="100" class="form-control" name="dirReg" placeholder="Dirección..." required>
+      </div>
+      <div class="form-group">
+        <label for="postalReg">Codigo Postal:</label>
+        <input type="text" maxlength="5" class="form-control" name="postalReg" placeholder="Codigo Postal..." required>
+      </div>
+      <div class="form-group">
+        <label for="passReg">Contraseña:</label>
+        <input minlenght="8" onkeypress="registerUser()" onkeyup="registerUser()" type="text" id="passReg" class="form-control" name="passReg" placeholder="Contraseña..." required>
+      </div>
+      <div class="form-group">
+        <label for="passReg2">Repetir contraseña:</label>
+        <input onkeypress="registerUser()" onkeyup="registerUser()" type="text" id="passReg2" class="form-control" name="passReg2" placeholder="Repetir contraseña..." required>
+      </div>
+      <button  type="submit" onclick="condiciones" id="registroUsuario" name="registroUsuario"  class="btn btn-primary" disabled>Registrarse</button>
+    </form>
+    <script type="text/javascript">
+
+    function registerUser(){
+      var pass = document.getElementById('passReg').value;
+      var pass2 = document.getElementById('passReg2').value;
+        if(pass==pass2){
+          document.getElementById("registroUsuario").disabled = false;
+        }if(pass!=pass2){
+          document.getElementById("registroUsuario").disabled = true;
+        }
+      }
+    </script>
+  </body>
+</html>
